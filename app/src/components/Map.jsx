@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMap, useMapEvent, Marker, Popup } from 'rea
 import "leaflet/dist/leaflet.css"; // <- Leaflet styles
 import LocationMarker from './LocationMarker';
 import { DateTime } from "luxon";
+import L from 'leaflet';
 
 
 
@@ -12,7 +13,17 @@ const StarterMap = (mapState) => {
   const MapUpdater = () => {
     const map = useMap();
     useEffect(() => {
-      map.setView(mapState.mapState)
+      const customIcon = L.icon({
+        iconUrl: '/src/assets/react.svg',
+        iconSize: [50, 50],
+        iconAnchor: [50, 50], 
+      });
+      const marker = L.marker(mapState.mapState, {icon: customIcon});
+      marker.addTo(map);
+      map.setView(mapState.mapState);
+      return () => {
+        marker.remove();
+      };
     }, [mapState])
     return null;
   }
@@ -36,8 +47,6 @@ const StarterMap = (mapState) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         <MapUpdater />
-        <Marker position={mapState.mapState}>
-        </Marker>
       </MapContainer>
       :''}
       </>

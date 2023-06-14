@@ -14,7 +14,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getLocation();
+    return () => {
+      getLocation();
+    }
   }, []);
 
 
