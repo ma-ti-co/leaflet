@@ -14,11 +14,16 @@ const StarterMap = (mapState) => {
     const map = useMap();
     useEffect(() => {
       const customIcon = L.icon({
-        iconUrl: '/assets/react.svg',
-        iconSize: [32, 32], // set the size of the icon
-        iconAnchor: [16, 32], // set the anchor point of the icon
+        iconUrl: '/src/assets/react.svg',
+        iconSize: [50, 50],
+        iconAnchor: [50, 50], 
       });
+      const marker = L.marker(mapState.mapState, {icon: customIcon});
+      marker.addTo(map);
       map.setView(mapState.mapState);
+      return () => {
+        marker.remove();
+      };
     }, [mapState])
     return null;
   }
@@ -42,8 +47,6 @@ const StarterMap = (mapState) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
         <MapUpdater />
-        <Marker position={mapState.mapState}>
-        </Marker>
       </MapContainer>
       :''}
       </>
