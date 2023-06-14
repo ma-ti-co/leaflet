@@ -14,7 +14,7 @@ const StarterMap = (mapState) => {
     const map = useMap();
     useEffect(() => {
       const customIcon = L.icon({
-        iconUrl: './dist/react.svg',
+        iconUrl: 'vite.svg',
         iconSize: [50, 50],
         iconAnchor: [50, 50], 
       });
